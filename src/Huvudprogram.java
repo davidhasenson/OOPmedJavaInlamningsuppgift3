@@ -69,7 +69,7 @@ public class Huvudprogram extends JFrame {
 
 
         startNewGameButton.addActionListener(new StartNewGameListener(messageLabel, gameTile, winningOrder, gamePanel));
-        testVictoryButton.addActionListener(new TestVictoryButtonListener(this));
+        testVictoryButton.addActionListener(new TestVictoryButtonListener(messageLabel, gameTile, winningOrder, gamePanel));
         for (JButton tile : gameTile) {
             tile.addActionListener(new TileListener(messageLabel, gameTile, winningOrder, gamePanel));
         }

@@ -1,31 +1,40 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class TestVictoryButtonListener implements ActionListener {
 
+    private JLabel message;
+    private JButton[] tiles;
+    private JButton[] winningOrder;
+    private JPanel gamePanel;
 
-    private Huvudprogram huvudprogram;
-
-    TestVictoryButtonListener(Huvudprogram huvudprogram) {
-        this.huvudprogram = huvudprogram;
-    }
+    TestVictoryButtonListener(JLabel message, JButton[] tiles, JButton[] winningOrder, JPanel gamePanel) {
+        this.message = message;
+        this.tiles = tiles;
+        this.winningOrder = winningOrder;
+        this.gamePanel = gamePanel;}
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
 
-        huvudprogram.gamePanel.removeAll();
+        gamePanel.removeAll();
 
         for (int i = 0; i < 16; i++) {
-            huvudprogram.gameTile[i] = new JButton(String.valueOf((i + 1)));
-            huvudprogram.gameTile[i].addActionListener(new TileListener(huvudprogram.messageLabel, huvudprogram.gameTile,huvudprogram.winningOrder,huvudprogram.gamePanel));
+            tiles[i] = new JButton(String.valueOf((i + 1)));
+            tiles[i].addActionListener(new TileListener(message, tiles, winningOrder, gamePanel));
         }
-        huvudprogram.gameTile[15].setText("");
-        huvudprogram.placeTilesOnBord();
+        tiles[15].setText("");
 
-        huvudprogram.gamePanel.revalidate();
-        huvudprogram.gamePanel.repaint();
-        huvudprogram.messageLabel.setText("Nytt test spel.");
+        for (JButton tile :tiles) {
+            gamePanel.add(tile);
+        }
+
+        gamePanel.revalidate();
+        gamePanel.repaint();
+        message.setText("Nytt test spel.");
 
     }
 }
