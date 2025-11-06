@@ -17,6 +17,8 @@ public class Huvudprogram extends JFrame implements ActionListener {
     JLabel messageLabel = new JLabel("test", JLabel.CENTER);
 
     JButton[] gameTile = new JButton[16];
+    JButton[] winningOrder = new JButton[16];
+
 
     public void placeTilesOnBord() {
         for (JButton tile : gameTile) {
@@ -40,7 +42,6 @@ public class Huvudprogram extends JFrame implements ActionListener {
     }
 
 
-
     Huvudprogram() {
         this.add(huvudpanel);
         huvudpanel.setLayout(new BorderLayout());
@@ -57,10 +58,8 @@ public class Huvudprogram extends JFrame implements ActionListener {
 
         for (int i = 0; i < 16; i++) {
             gameTile[i] = new JButton(String.valueOf((i + 1)));
-            if (i == 15) {
-                gameTile[i].setText("");
-            }
         }
+        gameTile[15].setText("");
         placeTilesOnBord();
 
         huvudpanel.add(messagePanel, BorderLayout.SOUTH);
@@ -78,6 +77,11 @@ public class Huvudprogram extends JFrame implements ActionListener {
         //setSize(500, 600);
         setVisible(true);
         setLocationRelativeTo(null);
+
+        for (int i = 0; i < 16; i++) {
+            winningOrder[i] = new JButton(String.valueOf((i + 1)));
+        }
+        winningOrder[15].setText("");
     }
 
 
@@ -98,9 +102,16 @@ public class Huvudprogram extends JFrame implements ActionListener {
             }
         }
 
-       CheckMove am = new CheckMove();
+        CheckMove am = new CheckMove();
         if (am.allowedMove(indexOfEmptyTile, indexOfChosenTile)) {
             moveTile(indexOfEmptyTile, indexOfChosenTile);
+        }
+
+        ResultCheck rc = new ResultCheck();
+        if (indexOfChosenTile != indexOfEmptyTile) {
+            if (rc.victoryCheck(gameTile, winningOrder)) {
+                messageLabel.setText("Du vann!");
+            }
         }
     }
 
