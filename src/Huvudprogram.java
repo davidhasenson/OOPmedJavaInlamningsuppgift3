@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class Huvudprogram extends JFrame implements ActionListener {
 
@@ -25,14 +24,22 @@ public class Huvudprogram extends JFrame implements ActionListener {
         }
     }
 
-    public void moveTile(int tileButton1, int tileButton2) {
-        JButton temp = gameTile[tileButton1];
-        gameTile[tileButton1] = gameTile[tileButton2];
-        gameTile[tileButton2] = temp;
+    public void moveTile(int indexOfEmptyTile, int indexOfChosenTile) {
+        JButton temp = gameTile[indexOfEmptyTile];
+        gameTile[indexOfEmptyTile] = gameTile[indexOfChosenTile];
+        gameTile[indexOfChosenTile] = temp;
+
+        gamePanel.removeAll();
+
+        for (JButton tile : gameTile) {
+            gamePanel.add(tile);
+        }
 
         gamePanel.revalidate();
         gamePanel.repaint();
     }
+
+
 
     Huvudprogram() {
         this.add(huvudpanel);
@@ -71,8 +78,8 @@ public class Huvudprogram extends JFrame implements ActionListener {
         //setSize(500, 600);
         setVisible(true);
         setLocationRelativeTo(null);
-
     }
+
 
     @Override
     public void actionPerformed(ActionEvent ae) {
@@ -90,13 +97,15 @@ public class Huvudprogram extends JFrame implements ActionListener {
                 indexOfEmptyTile = i;
             }
         }
-        moveTile(indexOfEmptyTile, indexOfChosenTile);
-        placeTilesOnBord();
+
+       CheckMove am = new CheckMove();
+        if (am.allowedMove(indexOfEmptyTile, indexOfChosenTile)) {
+            moveTile(indexOfEmptyTile, indexOfChosenTile);
+        }
     }
 
     void main() {
     }
-
 
 }
 
