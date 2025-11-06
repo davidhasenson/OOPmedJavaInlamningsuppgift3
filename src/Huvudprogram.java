@@ -1,7 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
-public class Huvudprogram extends JFrame {
+public class Huvudprogram extends JFrame implements ActionListener {
 
     JPanel huvudpanel = new JPanel();
 
@@ -10,25 +13,26 @@ public class Huvudprogram extends JFrame {
     JButton testVictoryButton = new JButton("Testa vinst");
 
     JPanel gamePanel = new JPanel();
-    JButton b1 = new JButton("B1");
-    JButton b2 = new JButton("B2");
-    JButton b3 = new JButton("B3");
-    JButton b4 = new JButton("B4");
-    JButton b5 = new JButton("B5");
-    JButton b6 = new JButton("B6");
-    JButton b7 = new JButton("B7");
-    JButton b8 = new JButton("B8");
-    JButton b9 = new JButton("B9");
-    JButton b10 = new JButton("B10");
-    JButton b11 = new JButton("B11");
-    JButton b12 = new JButton("B12");
-    JButton b13 = new JButton("B13");
-    JButton b14 = new JButton("B14");
-    JButton b15 = new JButton("B15");
-    JButton b16 = new JButton("B16");
 
     JPanel messagePanel = new JPanel();
     JLabel messageLabel = new JLabel("test", JLabel.CENTER);
+
+    JButton[] gameTile = new JButton[16];
+
+    public void placeTilesOnBord() {
+        for (JButton tile : gameTile) {
+            gamePanel.add(tile);
+        }
+    }
+
+    public void moveTile(int tileButton1, int tileButton2) {
+        JButton temp = gameTile[tileButton1];
+        gameTile[tileButton1] = gameTile[tileButton2];
+        gameTile[tileButton2] = temp;
+
+        gamePanel.revalidate();
+        gamePanel.repaint();
+    }
 
     Huvudprogram() {
         this.add(huvudpanel);
@@ -40,31 +44,26 @@ public class Huvudprogram extends JFrame {
         buttonPanel.add(startNewGameButton);
         buttonPanel.add(testVictoryButton);
 
-
         huvudpanel.add(gamePanel, BorderLayout.CENTER);
         gamePanel.setLayout(new GridLayout(4, 4));
         gamePanel.setPreferredSize(new Dimension(500, 500));
-        gamePanel.add(b1);
-        gamePanel.add(b2);
-        gamePanel.add(b3);
-        gamePanel.add(b4);
-        gamePanel.add(b5);
-        gamePanel.add(b6);
-        gamePanel.add(b7);
-        gamePanel.add(b8);
-        gamePanel.add(b9);
-        gamePanel.add(b10);
-        gamePanel.add(b11);
-        gamePanel.add(b12);
-        gamePanel.add(b13);
-        gamePanel.add(b14);
-        gamePanel.add(b15);
-        gamePanel.add(b16);
+
+        for (int i = 0; i < 16; i++) {
+            gameTile[i] = new JButton(String.valueOf((i + 1)));
+            if (i == 15) {
+                gameTile[i].setText("");
+            }
+        }
+        placeTilesOnBord();
 
         huvudpanel.add(messagePanel, BorderLayout.SOUTH);
         messagePanel.setLayout(new GridLayout(1, 1));
         messagePanel.setPreferredSize(new Dimension(500, 200));
         messagePanel.add(messageLabel);
+
+        for (JButton tile : gameTile) {
+            tile.addActionListener(this);
+        }
 
         setTitle("15-spel");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -75,9 +74,30 @@ public class Huvudprogram extends JFrame {
 
     }
 
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        JButton chosenTile = (JButton) ae.getSource();
+        int indexOfChosenTile = -1;
+        for (int i = 0; i < gameTile.length; i++) {
+            if (gameTile[i] == chosenTile) {
+                indexOfChosenTile = i;
+            }
+        }
+
+        int indexOfEmptyTile = -1;
+        for (int i = 0; i < gameTile.length; i++) {
+            if (gameTile[i].getText().equals("")) {
+                indexOfEmptyTile = i;
+            }
+        }
+        moveTile(indexOfEmptyTile, indexOfChosenTile);
+        placeTilesOnBord();
+    }
 
     void main() {
     }
+
+
 }
 
 
