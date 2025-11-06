@@ -1,9 +1,14 @@
 public class CheckMove {
 
-    CheckMove() {
+    int indexOfEmptyTile;
+    int indexOfChosenTile;
+
+    CheckMove(int indexOfEmptyTile, int indexOfChosenTile) {
+        this.indexOfEmptyTile = indexOfEmptyTile;
+        this.indexOfChosenTile = indexOfChosenTile;
     }
 
-    public boolean allowedMove(int indexOfEmptyTile, int indexOfChosenTile) {
+    public boolean allowedMove() {
         if (indexOfChosenTile != indexOfEmptyTile) {
             if (indexOfChosenTile == indexOfEmptyTile + 1 ||
                     indexOfChosenTile == indexOfEmptyTile - 1 ||

@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Huvudprogram extends JFrame implements ActionListener {
+public class Huvudprogram extends JFrame {
 
     JPanel huvudpanel = new JPanel();
 
@@ -26,7 +26,7 @@ public class Huvudprogram extends JFrame implements ActionListener {
         }
     }
 
-    public void moveTile(int indexOfEmptyTile, int indexOfChosenTile) {
+    /*public void moveTile(int indexOfEmptyTile, int indexOfChosenTile) {
         JButton temp = gameTile[indexOfEmptyTile];
         gameTile[indexOfEmptyTile] = gameTile[indexOfChosenTile];
         gameTile[indexOfChosenTile] = temp;
@@ -40,7 +40,7 @@ public class Huvudprogram extends JFrame implements ActionListener {
         gamePanel.revalidate();
         gamePanel.repaint();
     }
-
+*/
 
     Huvudprogram() {
         this.add(huvudpanel);
@@ -68,10 +68,10 @@ public class Huvudprogram extends JFrame implements ActionListener {
         messagePanel.add(messageLabel);
 
 
-       startNewGameButton.addActionListener(new StartNewGameListener(this));
-       testVictoryButton.addActionListener(new TestVictoryButtonListener(this));
+        startNewGameButton.addActionListener(new StartNewGameListener(this));
+        testVictoryButton.addActionListener(new TestVictoryButtonListener(this));
         for (JButton tile : gameTile) {
-            tile.addActionListener(this);
+            tile.addActionListener(new TileListener(messageLabel, gameTile, winningOrder, gamePanel));
         }
 
         setTitle("15-spel");
@@ -87,36 +87,6 @@ public class Huvudprogram extends JFrame implements ActionListener {
         winningOrder[15].setText("");
     }
 
-
-    @Override
-    public void actionPerformed(ActionEvent ae) {
-        JButton chosenTile = (JButton) ae.getSource();
-        int indexOfChosenTile = -1;
-        for (int i = 0; i < gameTile.length; i++) {
-            if (gameTile[i] == chosenTile) {
-                indexOfChosenTile = i;
-            }
-        }
-
-        int indexOfEmptyTile = -1;
-        for (int i = 0; i < gameTile.length; i++) {
-            if (gameTile[i].getText().equals("")) {
-                indexOfEmptyTile = i;
-            }
-        }
-
-        CheckMove am = new CheckMove();
-        if (am.allowedMove(indexOfEmptyTile, indexOfChosenTile)) {
-            moveTile(indexOfEmptyTile, indexOfChosenTile);
-        }
-
-        ResultCheck rc = new ResultCheck();
-        if (indexOfChosenTile != indexOfEmptyTile) {
-            if (rc.victoryCheck(gameTile, winningOrder)) {
-                messageLabel.setText("Du vann!");
-            }
-        }
-    }
 
     void main() {
     }

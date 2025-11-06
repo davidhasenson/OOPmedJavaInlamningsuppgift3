@@ -18,7 +18,7 @@ public class TestVictoryButtonListener implements ActionListener {
 
         for (int i = 0; i < 16; i++) {
             huvudprogram.gameTile[i] = new JButton(String.valueOf((i + 1)));
-            huvudprogram.gameTile[i].addActionListener(huvudprogram);
+            huvudprogram.gameTile[i].addActionListener(new TileListener(huvudprogram.messageLabel, huvudprogram.gameTile,huvudprogram.winningOrder,huvudprogram.gamePanel));
         }
         huvudprogram.gameTile[15].setText("");
         huvudprogram.placeTilesOnBord();
