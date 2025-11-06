@@ -67,6 +67,8 @@ public class Huvudprogram extends JFrame implements ActionListener {
         messagePanel.setPreferredSize(new Dimension(500, 200));
         messagePanel.add(messageLabel);
 
+
+       startNewGameButton.addActionListener(new StartNewGameListener(this));
         for (JButton tile : gameTile) {
             tile.addActionListener(this);
         }
