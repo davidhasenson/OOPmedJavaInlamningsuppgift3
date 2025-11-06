@@ -69,6 +69,7 @@ public class Huvudprogram extends JFrame implements ActionListener {
 
 
        startNewGameButton.addActionListener(new StartNewGameListener(this));
+       testVictoryButton.addActionListener(new TestVictoryButtonListener(this));
         for (JButton tile : gameTile) {
             tile.addActionListener(this);
         }
