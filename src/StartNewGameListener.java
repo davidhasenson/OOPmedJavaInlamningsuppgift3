@@ -6,27 +6,38 @@ import java.util.Collections;
 
 public class StartNewGameListener implements ActionListener {
 
-    private Huvudprogram huvudprogram;
+    private JLabel message;
+    private JButton[] tiles;
+    private JButton[] winningOrder;
+    private JPanel gamePanel;
 
-    StartNewGameListener(Huvudprogram huvudprogram) {
-        this.huvudprogram = huvudprogram;
+    StartNewGameListener(JLabel message, JButton[] tiles, JButton[] winningOrder, JPanel gamePanel) {
+        this.message = message;
+        this.tiles = tiles;
+        this.winningOrder = winningOrder;
+        this.gamePanel = gamePanel;
     }
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
 
-        huvudprogram.gamePanel.removeAll();
+        gamePanel.removeAll();
 
         for (int i = 0; i < 16; i++) {
-            huvudprogram.gameTile[i] = new JButton(String.valueOf((i + 1)));
-            huvudprogram.gameTile[i].addActionListener(new TileListener(huvudprogram.messageLabel, huvudprogram.gameTile,huvudprogram.winningOrder,huvudprogram.gamePanel));
+            tiles[i] = new JButton(String.valueOf((i + 1)));
+            tiles[i].addActionListener(new TileListener(message, tiles, winningOrder, gamePanel));
         }
-        huvudprogram.gameTile[15].setText("");
-        Collections.shuffle(Arrays.asList(huvudprogram.gameTile));
-        huvudprogram.placeTilesOnBord();
+        tiles[15].setText("");
 
-        huvudprogram.gamePanel.revalidate();
-        huvudprogram.gamePanel.repaint();
-        huvudprogram.messageLabel.setText("Nytt spel.");
+        Collections.shuffle(Arrays.asList(tiles));
+
+        for (JButton tile :tiles) {
+            gamePanel.add(tile);
+        }
+
+        gamePanel.revalidate();
+        gamePanel.repaint();
+
+        message.setText("Nytt spel.");
     }
 }
