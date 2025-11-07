@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Huvudprogram extends JFrame {
 
@@ -14,33 +12,10 @@ public class Huvudprogram extends JFrame {
     JPanel gamePanel = new JPanel();
 
     JPanel messagePanel = new JPanel();
-    JLabel messageLabel = new JLabel("test", JLabel.CENTER);
+    JLabel messageLabel = new JLabel("test", JLabel.CENTER );
 
     JButton[] gameTile = new JButton[16];
     JButton[] winningOrder = new JButton[16];
-
-
-    public void placeTilesOnBord() {
-        for (JButton tile : gameTile) {
-            gamePanel.add(tile);
-        }
-    }
-
-    /*public void moveTile(int indexOfEmptyTile, int indexOfChosenTile) {
-        JButton temp = gameTile[indexOfEmptyTile];
-        gameTile[indexOfEmptyTile] = gameTile[indexOfChosenTile];
-        gameTile[indexOfChosenTile] = temp;
-
-        gamePanel.removeAll();
-
-        for (JButton tile : gameTile) {
-            gamePanel.add(tile);
-        }
-
-        gamePanel.revalidate();
-        gamePanel.repaint();
-    }
-*/
 
     Huvudprogram() {
         this.add(huvudpanel);
@@ -56,28 +31,19 @@ public class Huvudprogram extends JFrame {
         gamePanel.setLayout(new GridLayout(4, 4));
         gamePanel.setPreferredSize(new Dimension(500, 500));
 
-        for (int i = 0; i < 16; i++) {
-            gameTile[i] = new JButton(String.valueOf((i + 1)));
-        }
-        gameTile[15].setText("");
-        placeTilesOnBord();
-
         huvudpanel.add(messagePanel, BorderLayout.SOUTH);
         messagePanel.setLayout(new GridLayout(1, 1));
         messagePanel.setPreferredSize(new Dimension(500, 200));
         messagePanel.add(messageLabel);
 
+        new StartNewGame(messageLabel, gameTile, winningOrder, gamePanel).newGame();
 
         startNewGameButton.addActionListener(new StartNewGameListener(messageLabel, gameTile, winningOrder, gamePanel));
         testVictoryButton.addActionListener(new TestVictoryButtonListener(messageLabel, gameTile, winningOrder, gamePanel));
-        for (JButton tile : gameTile) {
-            tile.addActionListener(new TileListener(messageLabel, gameTile, winningOrder, gamePanel));
-        }
 
         setTitle("15-spel");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         pack();
-        //setSize(500, 600);
         setVisible(true);
         setLocationRelativeTo(null);
 
@@ -86,7 +52,6 @@ public class Huvudprogram extends JFrame {
         }
         winningOrder[15].setText("");
     }
-
 
     void main() {
     }
