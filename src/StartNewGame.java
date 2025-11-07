@@ -1,29 +1,22 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class StartNewGameListener implements ActionListener {
-
+public class StartNewGame {
     private JLabel message;
     private JButton[] tiles;
     private JButton[] winningOrder;
     private JPanel gamePanel;
 
-    StartNewGameListener(JLabel message, JButton[] tiles, JButton[] winningOrder, JPanel gamePanel) {
+    StartNewGame(JLabel message, JButton[] tiles, JButton[] winningOrder, JPanel gamePanel) {
         this.message = message;
         this.tiles = tiles;
         this.winningOrder = winningOrder;
         this.gamePanel = gamePanel;
     }
 
-    @Override
-    public void actionPerformed(ActionEvent actionEvent) {
+    public void newGame() {
 
-        new StartNewGame(message, tiles, winningOrder, gamePanel).newGame();
-
-        /*
         gamePanel.removeAll();
 
         for (int i = 0; i < 16; i++) {
@@ -34,13 +27,13 @@ public class StartNewGameListener implements ActionListener {
 
         Collections.shuffle(Arrays.asList(tiles));
 
-        for (JButton tile :tiles) {
+        for (JButton tile : tiles) {
             gamePanel.add(tile);
         }
 
         gamePanel.revalidate();
         gamePanel.repaint();
 
-        message.setText("Nytt spel.");*/
+        message.setText("Nytt spel.");
     }
 }
